@@ -67,6 +67,7 @@ function initBoard() {
 function revealCell(row, col) {
    if (board[row][col] != "mine") {
       --SAFE_CELLS;
+      console.log(SAFE_CELLS);
       if (!SAFE_CELLS && !GAME_LOST) {
          alert("You win!");
          revealBoard();
@@ -179,6 +180,7 @@ function drawBoard() {
                   CELL_SIZE - 2,
                   CELL_SIZE - 2
                );
+               
             }
          }
       }
@@ -192,12 +194,13 @@ function handleMouseDown(event) {
 
    if (event.button === 0) {
       // left-click
-      if (board[row][col] === "mine") {
+      if (board[row][col] === "mine" && !is_flagged[row][col]) {
          GAME_LOST = true;
          revealBoard();
          alert("Game Over");
          return;
       }
+      if (!is_flagged[row][col] && !cell_status[row][col])
       revealCell(row, col);
    } else if (event.button === 1) {
       // right-click
